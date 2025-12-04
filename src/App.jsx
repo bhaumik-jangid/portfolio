@@ -38,6 +38,9 @@ function App() {
   }, []);
 
   return (
+    // <div className="bg-bhaumikRed text-white p-4">
+    //   If this is red, config is working.
+    // </div>
     <div className="bg-[#0D0D0D] text-gray-100 min-h-screen font-sans">
       <Navbar activeSection={activeSection} />
       
