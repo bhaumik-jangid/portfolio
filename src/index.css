@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -12,55 +13,49 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4f46e5;
+  background: #4F46E5;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7c3aed;
+  background: #6366F1;
 }
 
-/* Smooth scrolling */
-html {
+/* Custom styles */
+body {
   scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Custom animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.float-animation {
-  animation: float 4s ease-in-out infinite;
-}
-
-/* Custom glow effect */
-.glow-effect {
-  position: relative;
-}
-
-.glow-effect::before {
-  content: '';
+/* Noise texture */
+.noise-bg::before {
+  content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, #4f46e5, #7c3aed);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.03;
+  pointer-events: none;
 }
 
-.glow-effect:hover::before {
-  opacity: 0.5;
+/* Gradient text */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Custom selection color */
-::selection {
-  background: #4f46e5;
-  color: white;
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
 }

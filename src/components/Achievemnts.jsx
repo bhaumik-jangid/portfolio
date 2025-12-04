@@ -1,90 +1,100 @@
 import { motion } from 'framer-motion';
 
+const achievements = [
+  {
+    title: 'AWS Student Community Day Jalandhar 2025',
+    description: [
+      'Managed attendee onboarding',
+      'Delegated teams',
+      'Supported stage operations'
+    ]
+  },
+  {
+    title: 'LeetCode (Oct 2025)',
+    description: [
+      '200+ problems solved',
+      'Strengthened DSA fundamentals'
+    ]
+  }
+];
+
 const Achievements = () => {
-  const achievements = [
-    {
-      title: "AWS Student Community Day Jalandhar 2025",
-      role: "Team Management",
-      bullets: [
-        "Managed attendee onboarding",
-        "Delegated volunteer tasks",
-        "Supported stage operations"
-      ]
-    },
-    {
-      title: "LeetCode (Oct 2025)",
-      role: "Problem Solving",
-      bullets: [
-        "200+ problems solved",
-        "Improved DSA + problem-solving speed"
-      ]
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-    >
-      <motion.h2
-        variants={itemVariants}
-        className="text-3xl sm:text-4xl font-bold mb-12 text-center text-white"
+    <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
       >
-        <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 relative inline-block">
           Achievements
-        </span>
-      </motion.h2>
+          <motion.span
+            initial={{ width: 0 }}
+            whileInView={{ width: '100%' }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500"
+            style={{ originX: 0 }}
+          />
+        </h2>
 
-      <div className="space-y-8 max-w-4xl mx-auto">
-        {achievements.map((achievement, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            className="bg-[#121212] p-6 rounded-xl border border-gray-800 shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">{achievement.title}</h3>
-              <span className="text-indigo-300 bg-indigo-900/30 px-3 py-1 rounded-full text-sm mt-2 sm:mt-0">
-                {achievement.role}
-              </span>
-            </div>
+        <p className="text-gray-400 mb-12 max-w-2xl">
+          Some of my notable achievements and recognitions.
+        </p>
 
-            <ul className="space-y-2">
-              {achievement.bullets.map((bullet, i) => (
-                <li key={i} className="text-gray-300 flex items-start">
-                  <span className="text-indigo-400 mr-2">•</span>
-                  {bullet}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
+        <div className="relative">
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-violet-500 transform -translate-x-1/2"></div>
+          
+          <div className="space-y-8">
+            {achievements.map((achievement, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className={`flex ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+                  <div className="hidden md:block w-1/2"></div>
+                  <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-8' : 'md:pr-8'}`}>
+                    <div className="bg-[#191919] border border-[#222] rounded-lg p-6 shadow-lg">
+                      <div className="flex items-center mb-4">
+                        <div className="h-8 w-8 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center mr-4">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4 text-indigo-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                            />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-bold text-white">{achievement.title}</h3>
+                      </div>
+                      <ul className="space-y-2 pl-2">
+                        {achievement.description.map((item, i) => (
+                          <li key={i} className="flex items-start text-gray-300">
+                            <span className="text-indigo-400 mr-2">•</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

@@ -1,68 +1,100 @@
 import { motion } from 'framer-motion';
 
+const certificates = [
+  {
+    title: 'Cloud Computing',
+    issuer: 'NPTEL',
+    year: '2025',
+    description: 'Completed advanced course on cloud computing concepts and implementations'
+  },
+  {
+    title: 'C++ Programming',
+    issuer: 'CipherSchools',
+    year: '2025',
+    description: 'Mastered object-oriented programming concepts in C++'
+  },
+  {
+    title: 'Python & Django',
+    issuer: 'CipherSchools',
+    year: '2025',
+    description: 'Built web applications using Python and Django framework'
+  },
+  {
+    title: 'UX Design Foundations',
+    issuer: 'Google',
+    year: '2024',
+    description: 'Learned principles of user experience design and research'
+  }
+];
+
 const Certificates = () => {
-  const certificates = [
-    { title: "Cloud Computing", issuer: "NPTEL", date: "July 2025" },
-    { title: "C++", issuer: "CipherSchools", date: "Jan 2025" },
-    { title: "Python & Django", issuer: "CipherSchools", date: "Aug 2025" },
-    { title: "UX Design Foundations", issuer: "Google", date: "Oct 2024" }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { x: 50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-    >
-      <motion.h2
-        variants={itemVariants}
-        className="text-3xl sm:text-4xl font-bold mb-12 text-center text-white"
+    <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
       >
-        <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 relative inline-block">
           Certificates
-        </span>
-      </motion.h2>
+          <motion.span
+            initial={{ width: 0 }}
+            whileInView={{ width: '100%' }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500"
+            style={{ originX: 0 }}
+          />
+        </h2>
 
-      <div className="overflow-x-auto pb-6">
-        <div className="flex space-x-6 w-max">
-          {certificates.map((cert, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ scale: 1.03 }}
-              className="bg-[#121212] p-6 rounded-xl border border-gray-800 shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 min-w-[280px]"
-            >
-              <h3 className="text-xl font-semibold mb-2 text-white">{cert.title}</h3>
-              <p className="text-indigo-300 mb-1">{cert.issuer}</p>
-              <p className="text-gray-400 text-sm">{cert.date}</p>
-            </motion.div>
-          ))}
+        <p className="text-gray-400 mb-12 max-w-2xl">
+          Certifications I've earned through coursework and professional development.
+        </p>
+
+        <div className="relative">
+          <div className="flex overflow-x-auto pb-6 scrollbar-hide space-x-4">
+            {certificates.map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.03,
+                  boxShadow: '0 0 20px rgba(79, 70, 229, 0.3)'
+                }}
+                className="flex-shrink-0 w-72 bg-[#191919] rounded-lg border border-[#222] p-6"
+              >
+                <div className="h-12 w-12 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-indigo-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1">{cert.title}</h3>
+                <div className="flex items-center text-sm text-gray-400 mb-3">
+                  <span>{cert.issuer}</span>
+                  <span className="mx-2">•</span>
+                  <span>{cert.year}</span>
+                </div>
+                <p className="text-gray-300 text-sm">{cert.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

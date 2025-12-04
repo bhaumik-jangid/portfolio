@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -11,73 +12,64 @@ import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-function App() {
-  const [activeSection, setActiveSection] = useState('home');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'certificates', 'achievements', 'education', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+const SectionWrapper = ({ children, id }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   return (
-    // <div className="bg-bhaumikRed text-white p-4">
-    //   If this is red, config is working.
-    // </div>
-    <div className="bg-[#0D0D0D] text-gray-100 min-h-screen font-sans">
-      <Navbar activeSection={activeSection} />
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section id="home" className="min-h-screen flex items-center justify-center">
-          <Hero />
-        </section>
+    <motion.section
+      ref={ref}
+      id={id}
+      initial={{ opacity: 0, x: -50 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="min-h-screen py-20 px-4 sm:px-8 lg:px-16 bg-[#121212]"
+    >
+      {children}
+    </motion.section>
+  );
+};
 
-        <section id="about" className="py-20">
+function App() {
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  return (
+    <div className="dark:bg-[#0D0D0D] bg-white transition-colors duration-300">
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Hero />
+      <main className="max-w-7xl mx-auto">
+        <SectionWrapper id="about">
           <About />
-        </section>
-
-        <section id="skills" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="skills">
           <Skills />
-        </section>
-
-        <section id="projects" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="projects">
           <Projects />
-        </section>
-
-        <section id="certificates" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="certificates">
           <Certificates />
-        </section>
-
-        <section id="achievements" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="achievements">
           <Achievements />
-        </section>
-
-        <section id="education" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="education">
           <Education />
-        </section>
-
-        <section id="contact" className="py-20">
+        </SectionWrapper>
+        <SectionWrapper id="contact">
           <Contact />
-        </section>
+        </SectionWrapper>
       </main>
-
       <Footer />
     </div>
   );
